@@ -18,6 +18,8 @@
 
 package org.yawlfoundation.yawl.authentication;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.yawlfoundation.yawl.elements.YAWLServiceReference;
 import org.yawlfoundation.yawl.engine.YEngine;
 import org.yawlfoundation.yawl.logging.table.YAuditEvent;
@@ -43,10 +45,12 @@ public class YSessionCache extends ConcurrentHashMap<String, YSession>
 
     private YSessionTimer _timer;
     private HibernateEngine _db;                         // writes audit log
+    private final Logger _logger;
 
     public YSessionCache() {
         super();
         _timer = new YSessionTimer(this);
+        _logger = LogManager.getLogger(YSessionCache.class);
         initDb();
     }
 
@@ -70,6 +74,7 @@ public class YSessionCache extends ConcurrentHashMap<String, YSession>
 
         // first check if its an external client
         YExternalClient client = YEngine.getInstance().getExternalClient(name);
+        _logger.debug("name " + name + " password=" + password);
         if (client != null) {
             if (validateCredentials(client, password)) {
 

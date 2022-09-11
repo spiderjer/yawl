@@ -272,6 +272,7 @@ public class InterfaceB_EngineBasedServer extends YHttpServlet {
                     String userID = request.getParameter("userid");
                     String password = request.getParameter("password");
                     int interval = request.getSession().getMaxInactiveInterval();
+                    _log.debug("userid " + userID + " password=" + password);
                     msg.append(_engine.connect(userID, password, interval));
                 }
                 else if ("disconnect".equals(action)) {

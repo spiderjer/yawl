@@ -1557,6 +1557,7 @@ public class YEngine implements InterfaceADesign,
                         _workItemRepository.removeWorkItemFamily(workItem);
                     }
                     else {
+                        _logger.debug("----------------> completeWorkItem\nWorkItem = {}\n", workItem.getStatus());
                         throw new YStateException("WorkItem with ID [" + workItem.getIDString() +
                                 "] not in executing state.");
                     }
